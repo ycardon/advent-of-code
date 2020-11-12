@@ -1,5 +1,7 @@
 module AdventOfCode where
 
+import Data.List (group)
+
 -- day 1
 
 type Mass = Int
@@ -56,3 +58,24 @@ findNounVerbMatchingAnswer program answer =
       verb <- [0 .. 99],
       processParametrizedProgram noun verb program == answer
   ]
+
+-- day4
+
+neverDecrease :: Int -> Bool
+neverDecrease = snd . foldl f ('0', True) . show
+  where
+    f (prev, res) cur = (cur, res && (prev <= cur))
+
+hasDouble :: Int -> Bool
+hasDouble = snd . foldl f (' ', False) . show
+  where
+    f (prev, res) cur = (cur, res || (prev == cur))
+
+findPasswords :: [Int] -> [Int]
+findPasswords = filter hasDouble . filter neverDecrease
+
+hasTrueDouble :: Int -> Bool
+hasTrueDouble = any ((2 ==) . length) . group . show
+
+findTruePasswords :: [Int] -> [Int]
+findTruePasswords = filter hasTrueDouble . filter neverDecrease
