@@ -1,5 +1,6 @@
-import AdventOfCode (fuel, fuelIncFuel, modulesFuelRequirement, processProgram)
-import Test.Hspec (describe, hspec, it, shouldBe)
+import AdventOfCode
+import Test.Hspec
+import Test.QuickCheck
 
 main :: IO ()
 main = hspec $ do
@@ -30,3 +31,7 @@ main = hspec $ do
       processProgram [2, 4, 4, 5, 99, 0] `shouldBe` [2, 4, 4, 5, 99, 9801]
     it "simple program 4" $ do
       processProgram [1, 1, 1, 4, 99, 5, 6, 0, 99] `shouldBe` [30, 1, 1, 4, 2, 5, 6, 0, 99]
+
+  describe "day 4, password" $ do
+    it "hasDouble is hasDouble'" $
+      property $ \xs -> hasDouble xs === hasDouble' xs
